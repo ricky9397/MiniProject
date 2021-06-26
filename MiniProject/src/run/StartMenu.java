@@ -49,6 +49,7 @@ public class StartMenu {
 					mManager.memberInsert();
 					break;
 				case 3 :
+					System.out.println(" ▶ ▶ ID/PW찾기를 시작합니다.\n");
 					mManager.MemberFind();
 					break;
 				case 4 :
