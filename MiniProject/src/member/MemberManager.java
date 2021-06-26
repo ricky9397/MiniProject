@@ -1,97 +1,76 @@
 package member;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import admin.DBconn;
 import orders.OrderDao;
 import orders.OrderManager;
 import product.ProductDao;
-import run.StartMenu;
 
 public class MemberManager {
-	Scanner sc = new Scanner(System.in);
-	ArrayList<Member> mList;
-	private MemberDao dao;
-	Member member;	// 멤버 객체
-	OrderManager oManager;
 	public static int idx;
 	private static Connection conn = DBconn.getConnection();
+
+	private MemberDao dao;
+	ArrayList<Member> mList;
+	Member member;	
+	OrderManager oManager;
+	MemberMenu mMenu;
+	Scanner sc = new Scanner(System.in);
 	
 	public MemberManager(MemberDao mem) {
-		this.mList = new ArrayList<Member>();
-		this.oManager = new OrderManager(OrderDao.getInstance(), ProductDao.getInstance());
-		this.member = new Member();
 		this.dao = mem;
+		this.mList = new ArrayList<Member>();
+		this.member = new Member();
+		this.oManager = new OrderManager(OrderDao.getInstance(), ProductDao.getInstance());
+		mMenu = new MemberMenu();
 	}
 
-//	String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:xe";
-//	String user = "hr";
-//	String pw = "tiger";
 
-	// 회원 정보리스트 수정 필요 
+	//모든  회원 정보리스트 
 	void MemberList() {
-//		Connection conn = null;
 
 		try {
-//			conn = DriverManager.getConnection(jdbcUrl, user, pw);
 
 			mList = dao.getMemberList(conn);
 			
-			System.out.println("-------------회원 정보 리스트-------------");
-			System.out.println("-------------------------------------");
+			System.out.println("----------------------- 나의 정보 보기 ------------------------");
+			System.out.println("------------------------------------------------------------");
 			for (int i = 0; i < mList.size(); i++) {
 				if(idx==mList.get(i).getIdx()) {
-					System.out.println("회원 ID : " + mList.get(i).getId());
-					System.out.println("회원 PW : " + mList.get(i).getPassword());
-					System.out.println("회원이름 : " + mList.get(i).getName());
-					System.out.println("회원 핸드폰 : " + mList.get(i).getPhonenum());
-					System.out.println("회원 이메일 : " + mList.get(i).getEmail());
-					System.out.println("-------------------------------------");
+					System.out.println("나의 ID : " + mList.get(i).getId());
+					System.out.println("나의 PW : " + mList.get(i).getPassword());
+					System.out.println("나의 이름 : " + mList.get(i).getName());
+					System.out.println("나의 핸드폰 : " + mList.get(i).getPhonenum());
+					System.out.println("나의 이메일 : " + mList.get(i).getEmail());
+					System.out.println("------------------------------------------------------------\n");
 				}
 			}
 
 		} catch (Exception e) {
-			System.out.println("잘못입력하셨습니다. ");
+			System.out.println("※ 잘못입력하셨습니다. ");
 		}
 	}
-	
-	// 아이디 비번 찾기
-	public void FindMember() {
-		
-		System.out.println("회원 아이디를 찾으실 ");
-	}
-	
-	// 테스트 출력용 
-	private void SelectMember() {
-		Iterator<Member> ite = mList.iterator();
 
-		while(ite.hasNext()) {
-			System.out.println(ite.next() + " ");
-		}
-	}
 
 	// 회원가입
 	public void memberInsert() {
-//		Connection conn = null;
+		
 		try {
-//			conn = DriverManager.getConnection(jdbcUrl, user, pw);
 			mList = dao.getMemberList(conn);
 			while(true) {
 
 				String id = getStrInput("ID : ");
 				if(idCheck(id)) {
-					System.out.println("중복된 id입니다.");
+					System.out.println("※ 중복된 id입니다.\n");
 					continue;
 				}
 				String pw = getStrInput("PW : ");
 				String pw2 = getStrInput("PW CONFIRM : ");
 				if(!(pw.equals(pw2))) {
-					System.out.println("비밀번호를 잘못입력하셨습니다. 다시입력하세요.");
+					System.out.println("※ 비밀번호를 잘못입력하셨습니다. 다시입력하세요.\n");
 					continue;
 				}
 				String name = getStrInput("NAEM : ");
@@ -100,16 +79,15 @@ public class MemberManager {
 
 				if (pw.equals(pw2)) {
 					Member mem = new Member(id, pw, name, phone, email);
-					dao.inserMemberDTO(conn, mem);
-					System.out.println(id + "님 가입을 축하드립니다.");
+					dao.insertMember(conn, mem);
+					System.out.println(id + "님 가입을 축하드립니다.\n");
 					break;
 				} else {
-					System.out.println("비밀번호를 확인해주세요.");
+					System.out.println("※ 비밀번호를 확인해주세요.\n");
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("잘못입력하셨습니다. ");
-
+			System.out.println("※ 잘못입력하셨습니다. ");
 		}
 
 	}
@@ -127,9 +105,7 @@ public class MemberManager {
 
 	// 로그인 구현 기능
 	public void Login() {
-//		Connection conn = null;
 		try {
-//			conn = DriverManager.getConnection(jdbcUrl, user, pw);
 			String id = getStrInput("id : ");
 			String password = getStrInput("pw : ");
 
@@ -138,23 +114,25 @@ public class MemberManager {
 			Member member = FindByID(id);
 
 			if(member == null) {
-				System.out.println("등록되지 않은 ID입니다.");
+				System.out.println("※ 등록되지 않은 ID입니다.");
+				
 			} else if(member.getPassword().equals(password)) {
-				System.out.println("[" + member.getId() + "]님께서 로그인 하셨습니다.");
+				System.out.println("☞ [" + member.getId() + "]님께서 로그인 하셨습니다.\n");
 				idx = member.getIdx();
-				memberMenu();
+				mMenu.memberMenu();
+				
 			} else {
-				System.out.println("비밀번호가 틀렸습니다.");
+				System.out.println("※ 비밀번호가 틀렸습니다.");
 			}
 
 		} catch (Exception e) {
-			System.out.println("잘못입력하셨습니다. ");
+			System.out.println("※ 잘못입력하셨습니다. ");
 
 		}
 	}
 	
 	
-	// 아이디 비교 하는 메소드 
+	// 해당 아이디를 전체회원리스트에서 비교,확인 하는 메소드 
 	private Member FindByID(String id) {
 		for(Member memberDTO : mList) { 
 			if(memberDTO.getId().equals(id)) {
@@ -175,13 +153,13 @@ public class MemberManager {
 		return sc.nextInt();
 	}
 	
-	// 회원정보 수정
+	
+	// 로그인한 회원의 회원정보 수정
 	void memberUpdate() {
-//		Connection conn = null;
+
 		try {
-//			conn = DriverManager.getConnection(jdbcUrl, user, pw);
 			while(true) {
-				System.out.println("회원정보를 수정합니다.");
+				System.out.println(" ▶ ▶ 회원정보를 수정합니다.\n");
 
 				String pw = getStrInput("수정하실 패스워드 : ");
 				String name = getStrInput("수정하실 이름 : ");
@@ -189,56 +167,27 @@ public class MemberManager {
 				String email = getStrInput("수정하실 메일 : ");
 
 
-				System.out.println("입력한 사항이 모두 맞습니까? 예(1) 아니오(2)");
+				System.out.println(" ▶ ▶ 입력한 사항이 모두 맞습니까? 예(1) 아니오(2)\n");
 				int input = Integer.parseInt(sc.nextLine());
-
+				System.out.println();
 				if(input == 1) {
-					System.out.println("수정이 완료되었습니다.");
+					System.out.println("☞ 수정이 완료되었습니다.\n");
 					Member member = new Member(idx, pw, name, phone, email);
 					int result = dao.updateMember(conn, member);
 					break;
 				} else if(input == 2) {
-					System.out.println("메인으로 이동");
+					System.out.println("※ 메인으로 이동\n");
 					break;
 				} else {
-					System.out.println("잘못 누르셨습니다. 초기 메뉴로 이동합니다.");
+					System.out.println("※ 잘못 누르셨습니다. 초기 메뉴로 이동합니다.\n");
 					break;
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("잘못입력하셨습니다. ");
+			System.out.println("※ 잘못입력하셨습니다. ");
 
 		}
 	}
 	
-	// 메인 돌려보는 메소드
-	public void memberMenu() {
-		StartMenu startMenu = new StartMenu();
-		int choice;
-		while(true) {
-			System.out.println("[1]회원정보수정 [2]회원정보보기 [3]주문 [4]로그아웃");
-			try {
-				choice= Integer.parseInt(sc.nextLine());
-				if(choice<1 || choice>4) {
-					throw new Exception("잘못입력하셨습니다. 1,2,3번 중 하나를 선택해주세요. ");
-				}
-				switch(choice) {
-				case 1:
-					memberUpdate();
-					break;
-				case 2:
-					MemberList();
-					break;
-				case 3:
-					oManager.menu();
-					break;
-				case 4:
-					startMenu.FirstMenu();
-					break;
-				}
-			} catch(Exception e) {
-				System.out.println("잘못입력하셨습니다. 숫자 1~3번 만 입력하세요.");
-			}
-		}
-	}
 }
+

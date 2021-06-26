@@ -1,6 +1,7 @@
 package member;
 
 public class Member {
+
 	private int idx;
 	private String id;
 	private String password;
@@ -8,15 +9,10 @@ public class Member {
 	private String phonenum;
 	private String email;
 	
+	
 	public Member() {}
 	public Member(int idx) {
 		this.idx = idx;
-	}
-	public Member(String password, String name, String phonenum, String email) {
-		this.password = password;
-		this.name = name;
-		this.phonenum = phonenum;
-		this.email = email;
 	}
 	
 	public Member(String id, String password, String name, String phonenum, String email) {
@@ -43,6 +39,7 @@ public class Member {
 		this.phonenum = phonenum;
 		this.email = email;
 	}
+
 	public int getIdx() {
 		return idx;
 	}
@@ -79,11 +76,5 @@ public class Member {
 	public void setPhonenum(String phonenum) {
 		this.phonenum = phonenum;
 	}
-	
-	
-	@Override
-	public String toString() {
-		return "Member [idx=" + idx + ", id=" + id + ", password=" + password + ", name=" + name + ", email=" + email
-				+ ", phonenum=" + phonenum + "]";
-	}
+
 }

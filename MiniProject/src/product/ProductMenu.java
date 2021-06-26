@@ -9,8 +9,8 @@ public class ProductMenu {
 		ProductManager pm = new ProductManager(ProductDao.getInstance());
 
 		while(true) {
-			System.out.println("■■■■■■■■■■■■■■■ 상품 수정 메뉴입니다 ■■■■■■■■■■■■■■■");
-			System.out.println("1번 : 상품 추가 | 2번 : 상품 수정");
+			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■ 상품 수정 메뉴입니다 ■■■■■■■■■■■■■■■■■■■■■■■■■");
+			System.out.println("   1번 : 상품 추가    |     2번 : 상품 수정    \n");
 			int choice = Integer.parseInt(sc.nextLine());
 
 			switch(choice) {
@@ -22,7 +22,11 @@ public class ProductMenu {
 				pm.productList();
 				pm.productUpdate();
 				pm.productList();
-				break;   
+				break; 
+				
+			default : 
+				System.out.println("※ 잘못입력하셨습니다.");
+				continue;
 			}
 			break;
 		}

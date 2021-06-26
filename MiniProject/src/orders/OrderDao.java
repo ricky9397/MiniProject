@@ -6,19 +6,21 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import admin.CloseDB;
 import product.Product;
 
 
 public class OrderDao {
 
+	//싱글톤 처리
 	private OrderDao() {};
 	static private OrderDao dao = new OrderDao();
 	public static OrderDao getInstance() {
 		return dao;
 	}
 
+	//주문테이블에서 주문내역 읽어오기
 	public ArrayList<Order> getOrderList(Connection conn, Order order) {
-
 
 		ArrayList<Order> list = null;
 		Statement stmt = null;
@@ -40,24 +42,14 @@ public class OrderDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if(rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			CloseDB.dbClose(rs);
+			CloseDB.dbClose(stmt);
 		}
 		return list;
 	}
 
+	
+	//주문테이블에 주문 내역 추가하기
 	public int orderInsert(Connection conn, Order order) {
 		Product p = new Product();
 		int result = 0;
@@ -74,48 +66,17 @@ public class OrderDao {
 			result = pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("※ 잘못된 입력입니다. ");
+			
 		} finally {
-
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			CloseDB.dbClose(pstmt);
+			
 		}
 		return result;
 	}
 
-	public int deleteProduct(Connection conn, int order) {
 
-		int result = 0;
-
-		PreparedStatement pstmt = null;
-
-		try {
-			String sql = "delete from order where oidx=?";
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, order);
-
-			result = pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		return result;
-	}
-
+	//상품테이블의 재고수량을 구매수량만큼 차감하기
 	public int updateProduct(Connection conn, Order order) {
 
 		int result = 0;
@@ -133,14 +94,7 @@ public class OrderDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-
-			if(pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			CloseDB.dbClose(pstmt);
 		}
 		return result;
 	}

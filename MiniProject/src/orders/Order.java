@@ -17,18 +17,6 @@ public class Order {
 		this.idx = idx;
 	}
 	
-	public Order(int icode, int count) {
-		this.icode = icode;
-		this.count = count;
-	}
-	public Order(int oidx, int icode, int idx, String orderdate, int count, int price) {
-		this.oidx = oidx;
-		this.icode = icode;
-		this.idx = idx;
-		this.orderdate = orderdate;
-		this.count = count;
-		this.oprice = price;
-	}
 	public Order(int oidx, long ordercode, int icode, int idx, String orderdate, int count, int oprice) {
 		this.oidx = oidx;
 		this.ordercode = ordercode;
@@ -82,21 +70,6 @@ public class Order {
 	public void setOprice(int oprice) {
 		this.oprice = oprice;
 	}
-
-
-	
-
-	
-	@Override
-	public String toString() {
-		return "Order [oidx=" + oidx + ", ordercode=" + ordercode + ", icode=" + icode + ", idx=" + idx + ", orderdate="
-				+ orderdate + ", count=" + count + ", oprice=" + oprice + "]";
-	}
-
-
-	
-	
-	
 	
 	
 }

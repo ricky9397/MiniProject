@@ -1,12 +1,12 @@
 package product;
 
 public class Product {
+	
 	private int icode;
 	private String iname;
 	private int count;
 	private int iprice;
 
-	
 	public Product() {}
 	
 	public Product(int icode,String iname, int iprice ,int count) {
@@ -16,15 +16,10 @@ public class Product {
 		this.count = count;
 	}
 
-
-
-
 	public Product(int icode,  int count) {
 		this.icode = icode;
 		this.count = count;
 	}
-
-
 
 
 	public int getIcode() {
@@ -51,10 +46,6 @@ public class Product {
 	}
 	public void setCount(int count) {
 		this.count = count;
-	}
-	@Override
-	public String toString() {
-		return "Menu [icode=" + icode + ", iname=" + iname + ", iprice=" + iprice + "]";
 	}
 
 }

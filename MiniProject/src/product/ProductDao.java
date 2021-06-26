@@ -7,10 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import admin.CloseDB;
 import orders.Order;
 import product.Product;
 
 public class ProductDao {
+
+	//싱글톤 처리
 	private ProductDao() {}
 	static private ProductDao dao = new ProductDao();
 	public static ProductDao getInstance() {
@@ -40,25 +43,14 @@ public class ProductDao {
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      } finally {
-	         if(rs != null) {
-	            try {
-	               rs.close();
-	            } catch (SQLException e) {
-	               e.printStackTrace();
-	            }
-	         }
-	         if (stmt != null) {
-	            try {
-	               stmt.close();
-	            } catch (SQLException e) {
-	               e.printStackTrace();
-	            }
-	         }
+	    	  CloseDB.dbClose(rs);
+	    	  CloseDB.dbClose(stmt);
 	      }
 	      return list;
 	   }
 	   
-	   // 아이스크림 등록
+	   
+	   // 아이스크림 신메뉴 등록
 	   public int insertProduct(Connection conn, Product product) {
 
 	      int result = 0;
@@ -76,23 +68,15 @@ public class ProductDao {
 
 
 	      } catch (SQLException e) {
-	         // TODO Auto-generated catch block
 	         e.printStackTrace();
 	      } finally {
-
-	         if(pstmt != null) {
-	            try {
-	               pstmt.close();
-	            } catch (SQLException e) {
-	               // TODO Auto-generated catch block
-	               e.printStackTrace();
-	            }
-	         }
+	    	  CloseDB.dbClose(pstmt);
 	      }
 	      return result;
 	   }
 	   
-	   // 아이스크림 수정
+	   
+	   // 아이스크림 메뉴 수정
 	   int updateProduct(Connection conn, Product product) {
 
 	      int result = 0;
@@ -113,17 +97,9 @@ public class ProductDao {
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	      } finally {
-
-	         if(pstmt != null) {
-	            try {
-	               pstmt.close();
-	            } catch (SQLException e) {
-	               e.printStackTrace();
-	            }
-	         }
+	    	  CloseDB.dbClose(pstmt);
 	      }
 	      return result;
 	   }
 	   
-
 	}

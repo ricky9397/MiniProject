@@ -14,11 +14,6 @@ public class AdminManager {
 	private Scanner sc;
 	private static Connection conn = DBconn.getConnection();
 	
-//	//2. 연결
-//	String jdbcUrl = "jdbc:oracle:thin:@localhost:1521:xe";
-//	String user = "hr";
-//	String pw = "tiger";
-
 
 	public AdminManager(AdminDao dao) { //생성자
 		this.dao = dao;
@@ -26,14 +21,10 @@ public class AdminManager {
 	}
 
 
-	//// 전체 리스트 출력 메소드
-	/// DAO에서 데이터 리스트를 받고, 출력 처리 
+	// 전체 주문 리스트 출력 메소드
 	void orderList() {
-		//Connection 객체 생성 -트랜젝션 처리
-//		Connection conn = null;
 		
 		try {
-//			conn = DriverManager.getConnection(jdbcUrl,user,pw);
 			List<Order> list = dao.getOrderList(conn);
 
 			System.out.println("주문 정보 리스트 ");
@@ -48,7 +39,6 @@ public class AdminManager {
 			System.out.println("------------------------------------------------------------------------");
 
 
-//		} catch (SQLException e) {
 	
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -56,20 +46,16 @@ public class AdminManager {
 
 	}
 
+	
 	//총 매출 출력
 	public void salseManagement() {
-		//Connection 객체 생성 -트랜젝션 처리
-//		Connection conn = null;
 		
 		try {
-//			conn = DriverManager.getConnection(jdbcUrl,user,pw);
 
 			int sum = dao.getSales(conn);
 
 			System.out.println("총 매출은 "+ sum +"원 입니다. ");
 
-
-//		} catch (SQLException e) {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,11 +64,8 @@ public class AdminManager {
 	
 	//달별 매출 출력
 	public void salseManagementMonth() {
-		//Connection 객체 생성 -트랜젝션 처리
-//		Connection conn = null;
 
 		try {
-//			conn = DriverManager.getConnection(jdbcUrl,user,pw);
 
 			System.out.println("검색하실 월을 입력해주세요.");
 			System.out.println("2021년 5월 매출을 보시려면 21/05 형식으로 입력해주세요. ");
@@ -98,7 +81,6 @@ public class AdminManager {
 	         }
 
 
-//		} catch (SQLException e) {
 		} catch (Exception e) {
 			System.out.println("잘못입력하셨습니다.");
 			e.printStackTrace();
@@ -108,11 +90,8 @@ public class AdminManager {
 	
 	//일별 매출 출력
 	public void salseManagementDaily() {
-		//Connection 객체 생성 -트랜젝션 처리
-//		Connection conn = null;
 
 		try {
-//			conn = DriverManager.getConnection(jdbcUrl,user,pw);
 
 			System.out.println("검색하실 월과 일자를 입력해주세요. ");
 			System.out.println("6월 1일이면 06/01 형식으로 입력해주세요. ");
@@ -130,22 +109,17 @@ public class AdminManager {
 	         }
 
 
-//		} catch (SQLException e) {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("잘못입력하셨습니다.");
 		}
 	}
 
+	
 	// 재고보기
 	public void inventory() {
 
-		//Connection 객체 생성 -트랜젝션 처리
-//		Connection conn = null;
-
-
 		try {
-//			conn = DriverManager.getConnection(jdbcUrl,user,pw);
 			List<Product> list = dao.getInventory(conn);
 
 			System.out.println("상품 재고 리스트 ");
@@ -157,23 +131,19 @@ public class AdminManager {
 				System.out.printf("%d \t %s \t %d \t\t %d \n", product.getIcode(),product.getIname(),product.getIprice(),product.getCount());
 
 			}
-//		} catch (SQLException e) {
 		} catch (Exception e) {
 			System.out.println("잘못 입력하셨습니다.");
 			e.printStackTrace();
 		}
 	}
 
-//	//재고 넣기
+	
+	//재고 넣기
 	void putIndentory() {
 
-		//Connection 객체 생성 -트랜젝션 처리
-//		Connection conn = null;
-		
 		inventory();
 		
 		try {
-//	/		conn = DriverManager.getConnection(jdbcUrl,user,pw);
 			
 			System.out.println("재고 수량을 입력합니다. 상품 번호를 입력해주세요.");
 			int icode = sc.nextInt();
@@ -192,7 +162,6 @@ public class AdminManager {
 				System.out.println("수정실패 ");
 			}
 			
-//		} catch (SQLException e) {
 		 }catch (NumberFormatException e){
          	System.out.println("숫자로만 입력해주세요.");
 		} catch (Exception e) {
