@@ -19,8 +19,6 @@ public class MemberDao {
 		return dao;
 	}
 
-	
-	
 	//모든 회원의 정보 읽기
 	public ArrayList<Member> getMemberList(Connection con){
 
@@ -50,7 +48,6 @@ public class MemberDao {
 		return list;
 	}
 
-	
 	//회원테이블에 새로운 회원 추가하기 (회원가입)
 	public int insertMember(Connection con, Member mem) {
 
@@ -76,7 +73,7 @@ public class MemberDao {
 		return result;
 	}
 
-	
+
 	// 로그인한 회원의 정보 수정
 	public int updateMember(Connection conn, Member member) {
 		int result = 0;
