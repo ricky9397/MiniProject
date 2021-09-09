@@ -15,7 +15,7 @@
 회원제 아이스크림 주문 시스템  
 
 <h2>2. 설계</h2>
-![java poject1](https://user-images.githubusercontent.com/84554175/132671687-ae1c4271-aed7-4d3f-97be-17d451ba135b.png)
+![java poject1](https://user-images.githubusercontent.com/84554175/132671687-ae1c4271-aed7-4d3f-97be-17d451ba135b.png) <br>
 
 
 ![화면 캡처 2021-09-09 194046](https://user-images.githubusercontent.com/84554175/132671817-ff025f56-8026-40d0-9062-408658421105.png)
