@@ -1,7 +1,7 @@
 # MiniProject
 자바 미니프로젝트
 
-개인 프로젝트 깃허브블로그(시현영상을 볼수 있습니다.) : https://ricky9397.github.io/Portfolio_bolg/
+깃허브블로그(시현영상을 볼수 있습니다.) : https://ricky9397.github.io/Portfolio_bolg/
 
 @참여자@
 김명호/김승민/김은비/정소연
